@@ -3,5 +3,6 @@ from pokemons import views
 
 urlpatterns = [
     path("list/", views.PokemonListView.as_view(), name='pokedex'),
-    path("pokemons/<int:pokemon_id>", views.PokemonDetailView.as_view(), name='pokemon-information'), 
+    path("pokemons/<int:pokemon_id>", views.PokemonDetailView.as_view(), name='pokemon-information'),
+    path("pokemon-create/", views.CreatePokemonView.as_view(), name='create-pokemon'),
 ]

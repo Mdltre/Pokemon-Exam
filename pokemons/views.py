@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pokemons.models import Type, Species, Pokemon
+from pokemons.forms import PokemonForm
 
 # Create your views here.
 class PokemonListView(ListView):
@@ -16,3 +17,9 @@ class PokemonDetailView(DetailView):
     
     def get_object(self):
         return get_object_or_404(Pokemon, pk=self.kwargs.get("pokemon_id"))
+    
+class CreatePokemonView(CreateView):
+    model = Pokemon
+    form_class = PokemonForm
+    template_name = "create_pokemon.html"
+    success_url="/list/"
