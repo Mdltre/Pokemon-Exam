@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block title %}Pokemon Information{% endblock %}
+
+{% block header %}
+<h1>Pokedex: {{ pokemon.pokemon_name }}</h1>
+{% endblock %} 
+
+{% block content %} 
+<img src={{ pokemon.pokemon_sprite }} />
+<h3>Name: {{pokemon.pokemon_name}}</h3>
+<p>Base Experience: {{pokemon.base_experience}}</p>   
+<p>Type: {{pokemon.pokemon_type}}</p> 
+<p>Species: {{pokemon.pokemon_species}}</p> 
+<p>Height: {{pokemon.pokemon_height}}</p> 
+<p>Weight: {{pokemon.pokemon_weight}}</p> 
+{% endblock %}

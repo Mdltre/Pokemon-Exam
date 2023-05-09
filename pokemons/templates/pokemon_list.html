@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}Pokedex{% endblock %}
+
+{% block header %}
+<h1 class="center">Pokedex</h1>
+{% endblock %} 
+
+{% block content %}
+
+{% if error %}
+  <p style="color: red;" class="text-center">Please submit a search term.</p>
+  {% endif %}
+  <form action="/pokedex/search/" method="get" class="text-center">
+    <input type="text" name="query">
+    <input type="submit" value="Search">
+  </form>
+{% if pokemons %}
+<p>Found {{ pokemons|length }} pokemon{{ pokemons|pluralize }}.</p>
+<ul>
+  {% for pokemon in pokemons %}
+  <li>{{ pokemon.pokemon_name }}</li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="text-center"></p>
+{% endif %}
+{% if pokemons.exists %}
+{% for result in pokemons %}
+{{ result }}
+{% endfor %}
+{% endif %}
+
+<div class="container">
+    <div class="row">
+      <div class="col-sm">
+      </div>
+      <div class="col-l bg-light text-dark">
+            <ul class="text-center">
+            {% for pokemon in pokemon_list %}
+                <p><a href = "{% url 'pokemon-information' pokemon.pk %}">{{pokemon.pokemon_name}}</a></p>
+            {% empty %}
+                <li>No pokemons.</li>
+            {% endfor %}
+            </ul>
+            {% endblock %}
+      </div>
+      <div class="col-sm">
+      </div>
+    </div>
+  </div>
