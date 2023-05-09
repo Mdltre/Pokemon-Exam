@@ -2,14 +2,11 @@ from django.db import models
 from django.contrib.auth.models import User
 from datetime import datetime, timezone, timedelta
 
-# Create your models here.
-
 class Type(models.Model):
     type_name = models.CharField(max_length=100, unique=True)
 
 class Species(models.Model):
     species_name = models.CharField(max_length=100, unique=True)
-    evolves_from_species = models.URLField(null=True)
     evolution_chain = models.URLField(null=True)
     
 class Pokemon(models.Model):
