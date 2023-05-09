@@ -1,0 +1,6 @@
+<form method="POST">
+    {% csrf_token %}
+    Are you want to delete this item {{ pokemon.pokemon_name }}?
+    <input type="submit" value="Yes" />
+    <a href="/list/">Cancel</a>
+</form>

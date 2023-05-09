@@ -23,3 +23,18 @@ class CreatePokemonView(CreateView):
     form_class = PokemonForm
     template_name = "create_pokemon.html"
     success_url="/list/"
+    
+class UpdatePokemonView(UpdateView):
+    model = Pokemon 
+    form_class = PokemonForm
+    context_object_name = "pokemon"
+    template_name = "update_pokemon.html"
+    success_url = "/list/"
+    
+    def get_object(self):
+        return get_object_or_404(Pokemon, pk=self.kwargs.get("pk"))
+    
+class DeletePokemonView(DeleteView):
+    model = Pokemon
+    template_name = "delete_pokemon.html"
+    success_url = "/list/"
