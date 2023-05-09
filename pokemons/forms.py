@@ -1,12 +1,25 @@
 from django.forms import ModelForm
 from django import forms
 from pokemons.models import Type, Species, Pokemon
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 
 class PokemonForm(ModelForm):
     model = Pokemon
     field = "__all__"
     
-class RegistrationForm(forms.Form):
-    username = forms.CharField(max_length = 100)
-    email = forms.EmailField()
-    password = forms.CharField(widget=forms.PasswordInput())
+class RegistrationForm(UserCreationForm):
+    
+    first_name = forms.CharField(max_length=30, required=False, help_text='Optional')
+    last_name = forms.CharField(max_length=30, required=False, help_text='Optional')
+    email = forms.EmailField(max_length=254, help_text='Enter a valid email address')
+
+    class Meta:
+        model = User
+        fields = [
+            'username', 
+            'first_name', 
+            'last_name', 
+            'email', 
+            'password', 
+            ]

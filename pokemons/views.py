@@ -1,9 +1,16 @@
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pokemons.models import Type, Species, Pokemon
-from pokemons.forms import PokemonForm
+from django.contrib.auth.decorators import user_passes_test, login_required
+from pokemons.forms import PokemonForm, RegistrationForm
 
 # Create your views here.
+
+class RegisterView(CreateView):
+    form_class = RegistrationForm
+    template_name = "register.html"
+    success_url = reverse_lazy('login')
 class PokemonListView(ListView):
     model = Pokemon
     queryset = Pokemon.objects.all()

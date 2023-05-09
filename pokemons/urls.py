@@ -4,7 +4,9 @@ from pokemons import views
 
 urlpatterns = [    
                
-    path("accounts/", include("django.contrib.auth.urls")), 
+    path("accounts/", include("django.contrib.auth.urls")),
+    
+    path('register/', views.RegisterView.as_view(), name='register'),
     
     path("list/", views.PokemonListView.as_view(), name='pokedex'),
     path("pokemons/<int:pk>", views.PokemonDetailView.as_view(), name='pokemon-information'),
