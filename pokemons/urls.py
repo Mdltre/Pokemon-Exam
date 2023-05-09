@@ -1,7 +1,11 @@
 from django.urls import path, include
+from django.views.generic.base import TemplateView
 from pokemons import views
 
 urlpatterns = [    
+               
+    path("accounts/", include("django.contrib.auth.urls")), 
+    
     path("list/", views.PokemonListView.as_view(), name='pokedex'),
     path("pokemons/<int:pk>", views.PokemonDetailView.as_view(), name='pokemon-information'),
     path("pokemons-create/", views.CreatePokemonView.as_view(), name='create-pokemon'),
