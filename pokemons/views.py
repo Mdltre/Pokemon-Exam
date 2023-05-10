@@ -26,13 +26,15 @@ class PokemonDetailView(DetailView):
     
     def get_object(self):
         return get_object_or_404(Pokemon, pk=self.kwargs.get("pk"))
-    
+
+@login_required
 class CreatePokemonView(CreateView):
     model = Pokemon
     form_class = PokemonForm
     template_name = "create_pokemon.html"
     success_url="pokedex/list/"
-    
+
+@login_required
 class UpdatePokemonView(UpdateView):
     model = Pokemon 
     form_class = PokemonForm
@@ -42,7 +44,8 @@ class UpdatePokemonView(UpdateView):
     
     def get_object(self):
         return get_object_or_404(Pokemon, pk=self.kwargs.get("pk"))
-    
+
+@login_required 
 class DeletePokemonView(DeleteView):
     model = Pokemon
     template_name = "delete_pokemon.html"
