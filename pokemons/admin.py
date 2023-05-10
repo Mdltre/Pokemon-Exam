@@ -16,7 +16,7 @@ class TypeAdmin(admin.ModelAdmin):
     
 class SpeciesAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {"fields": ["species_name", "evolves_from_species", "evolution_chain"]}),
+        (None, {"fields": ["species_name", "evolution_chain"]}),
     ]
     search_fields = ["species_name"]
     list_display = ["species_name"]

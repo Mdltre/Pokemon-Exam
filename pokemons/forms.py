@@ -5,8 +5,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 class PokemonForm(ModelForm):
-    model = Pokemon
-    field = "__all__"
+    class Meta:
+        model = Pokemon
+        fields = "__all__"
     
 class RegistrationForm(UserCreationForm):
     first_name = forms.CharField(max_length=30, required=False, help_text='Optional')

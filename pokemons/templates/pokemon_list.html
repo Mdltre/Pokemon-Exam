@@ -27,15 +27,6 @@
         <a class="nav-link" href="{% url 'register' %}">Create Users</a>
       </li>
       <li class="nav-item">
-        {% if error %}
-          <p style="color: red;" class="text-center">Please submit a search term.</p>
-        {% endif %}
-          <form action="/pokedex/search/" method="get" class="text-center">
-          <input type="text" name="query">
-          <input type="submit" value="Search">
-          </form>
-      </li>
-      <li class="nav-item">
           <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
       </li>
     </ul>
@@ -50,15 +41,6 @@
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'pokedex' %}">Pokedex List</a>
       </li>
-      <li class="nav-item">
-        {% if error %}
-          <p style="color: red;" class="text-center">Please submit a search term.</p>
-        {% endif %}
-          <form action="/pokedex/search/" method="get" class="text-center">
-          <input type="text" name="query">
-          <input type="submit" value="Search">
-          </form>
-      </li>
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'register' %}">Register</a>
       </li>
@@ -66,45 +48,48 @@
         <a class="nav-link" href="{% url 'login' %}">Login</a>
       </li>
       {% endif %}
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-          Filter: Type
-        </a>
-        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <li><a class="dropdown-item" href="#">Shadow</a></li>
-          <li><a class="dropdown-item" href="#">Unknown</a></li>
-          <li><a class="dropdown-item" href="#">Fairy</a></li>
-          <li><a class="dropdown-item" href="#">Dark</a></li>
-          <li><a class="dropdown-item" href="#">Dragon</a></li>
-          <li><a class="dropdown-item" href="#">Ice</a></li>
-          <li><a class="dropdown-item" href="#">Psychic</a></li>
-          <li><a class="dropdown-item" href="#">Electric</a></li>
-          <li><a class="dropdown-item" href="#">Grass</a></li>
-          <li><a class="dropdown-item" href="#">Water</a></li>
-          <li><a class="dropdown-item" href="#">Fire</a></li>
-          <li><a class="dropdown-item" href="#">Steel</a></li>
-          <li><a class="dropdown-item" href="#">Ghost</a></li>
-          <li><a class="dropdown-item" href="#">Bug</a></li>
-          <li><a class="dropdown-item" href="#">Rock</a></li>
-          <li><a class="dropdown-item" href="#">Ground</a></li>
-          <li><a class="dropdown-item" href="#">Poison</a></li>
-          <li><a class="dropdown-item" href="#">Flying</a></li>
-          <li><a class="dropdown-item" href="#">Fighting</a></li>
-          <li><a class="dropdown-item" href="#">Normal</a></li>
-        </ul>
+      <li class="nav-item">
+        {% if error %}
+          <p style="color: red;" class="text-center">Please submit a search term.</p>
+        {% endif %}
+          <form action="/pokedex/list/search/" method="get" class="text-center">
+          <input type="text" name="query">
+          <input type="submit" value="Search">
+          </form>
       </li>
+          <form action="/pokedex/list/type-search/" method="get">
+            <label for="types">Filter Type</label>
+            <select name="types" id="types">
+              <option value="shadow">Shadow</option>
+              <option value="unknown">Unknown</option>
+              <option value="fairy">Fairy</option>
+              <option value="dark">Dark</option>
+              <option value="dragon">Dragon</option>
+              <option value="ice">Ice</option>
+              <option value="psychic">Psychic</option>
+              <option value="electric">Electric</option>
+              <option value="grass">Grass</option>
+              <option value="water">Water</option>
+              <option value="fire">Fire</option>
+              <option value="steel">Steel</option>
+              <option value="ghost">Ghost</option>
+              <option value="bug">Bug</option>
+              <option value="rock">Rock</option>
+              <option value="ground">Ground</option>
+              <option value="poison">Poison</option>
+              <option value="flying">Flying</option>
+              <option value="fighting">Fighting</option>
+              <option value="normal">Normal</option>
+            </select>
+            <input type="submit" value="Submit">
+          </form>
     </ul>
   </div>
 </nav>
 
-
+<div class = "container text-center">
 {% if pokemons %}
 <p>Found {{ pokemons|length }} pokemon{{ pokemons|pluralize }}.</p>
-<ul>
-  {% for pokemon in pokemons %}
-  <li>{{ pokemon.pokemon_name }}</li>
-  {% endfor %}
-</ul>
 {% else %}
 <p class="text-center"></p>
 {% endif %}
@@ -113,6 +98,7 @@
 {{ result }}
 {% endfor %}
 {% endif %}
+</div>
 
 <div class="container">
     <div class="row">
@@ -122,16 +108,24 @@
             <ul class="text-center">
             {% for pokemon in pokemon_list %}
                 <p>
+                  <img src={{ pokemon.pokemon_sprite }} />
+                  <div class="row">
                   <a href = "{% url 'pokemon-information' pokemon.pk %}">{{pokemon.pokemon_name}}</a>
-
+                  {% if user.is_authenticated %}
+                  <div class="col-sm">
+                  <a class="btn btn-secondary" href="{% url 'update-pokemon' pokemon.pk %}" role="button">Update</a>
+                  <a class="btn btn-danger" href="{% url 'delete-pokemon' pokemon.pk %}" role="button">Delete</a>
+                  </div>
+                </div>
+                  {% endif %}
                 </p>
-            {% empty %}
-                <li>No pokemons.</li>
             {% endfor %}
             </ul>
             {% endblock %}
       </div>
-      <div class="col-sm">
+      <div class="col-sm bg-danger">
       </div>
     </div>
   </div>
+
+  

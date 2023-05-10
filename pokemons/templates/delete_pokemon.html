@@ -1,6 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Pokemon{% endblock %}
+
+{% block header %}
+<h1>Delete Pokemon</h1>
+{% endblock %} 
+
+{% block content %}
+
 <form method="POST">
     {% csrf_token %}
-    Are you want to delete this item {{ pokemon.pokemon_name }}?
+    Are you want to delete pokemon {{ pokemon.pokemon_name }}?
     <input type="submit" value="Yes" />
     <a href="/list/">Cancel</a>
 </form>
+
+{% endblock %}
