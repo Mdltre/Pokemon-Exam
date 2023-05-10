@@ -9,11 +9,11 @@ class PokemonForm(ModelForm):
     field = "__all__"
     
 class RegistrationForm(UserCreationForm):
-    
     first_name = forms.CharField(max_length=30, required=False, help_text='Optional')
     last_name = forms.CharField(max_length=30, required=False, help_text='Optional')
     email = forms.EmailField(max_length=254, help_text='Enter a valid email address')
-
+    password1 = forms.CharField(widget=forms.PasswordInput())
+    password2 = forms.CharField(widget=forms.PasswordInput())
     class Meta:
         model = User
         fields = [
@@ -21,5 +21,6 @@ class RegistrationForm(UserCreationForm):
             'first_name', 
             'last_name', 
             'email', 
-            'password', 
+            'password1', 
+            'password2', 
             ]
