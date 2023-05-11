@@ -15,6 +15,10 @@
 <p>Species: {{pokemon.pokemon_species}}</p> 
 <p>Height: {{pokemon.pokemon_height}}</p> 
 <p>Weight: {{pokemon.pokemon_weight}}</p>
-<p>Evolution Chart: {{pokemon.}}
+<p>Evolution Chart: </p>
+
+<p><img src={{ evolution.first_p.pokemon_sprite }} />{{evolution.first_p}}</p>
+<p><img src={{ evolution.second_p.pokemon_sprite }} />{{evolution.second_p}}</p>
+<p><img src={{ evolution.third_p.pokemon_sprite }} />{{evolution.third_p}}</p>
 </div>
 {% endblock %}

@@ -1,5 +1,8 @@
+from typing import Any, Dict
+import requests
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
+from django.db.models import Q
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from pokemons.models import Type, Species, Pokemon
@@ -43,7 +46,50 @@ class PokemonDetailView(DetailView):
     
     def get_object(self):
         return get_object_or_404(Pokemon, pk=self.kwargs.get("pk"))
+        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pokemon = self.get_object()
+        species_url = f"https://pokeapi.co/api/v2/pokemon-species/{ pokemon.pokemon_name }"
+        
+        res = requests.get(species_url)
+        if res.status_code == 200:
+            data = res.json()
+            evolution_url = data["evolution_chain"]["url"]
+            e_info = requests.get(evolution_url).json()
+            
+            first = e_info["chain"]["species"]["name"]
+            
+            if len(e_info["chain"]["evolves_to"]) > 0:
+                
+                second = e_info["chain"]["evolves_to"][0]["species"]["name"]
+                
+                if len(e_info["chain"]["evolves_to"][0]["evolves_to"]) > 0:
+                    
+                    third = e_info["chain"]["evolves_to"][0]["evolves_to"][0]["species"]["name"]
+            
+        if third != (None):
+                third_p = Pokemon.objects.get(pokemon_name=third)
 
+        if second != (None):
+                second_p = Pokemon.objects.get(pokemon_name=second)
+                
+        first_p = Pokemon.objects.get(pokemon_name=first)
+        
+        evolution = {
+            "third_p": third_p,
+            "second_p": second_p,
+            "first_p": first_p
+        }
+        
+        # if evolution.exists():
+        context["evolution"] = evolution
+        
+        return context
+                
+        
+
+    
 @method_decorator(login_required, name='dispatch')
 class CreatePokemonView(CreateView):
     model = Pokemon
