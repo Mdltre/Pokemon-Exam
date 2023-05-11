@@ -100,13 +100,14 @@
 {% endif %}
 </div>
 
-<div class="container">
+<div class="container d-flex">
     <div class="row">
       <div class="col-sm">
       </div>
-      <div class="col-l bg-light text-dark">
-            <ul class="text-center">
+     
             {% for pokemon in pokemon_list %}
+            <div class="col-l bg-light text-dark">
+              <ul class="text-center">    
                 <p>
                   <img src={{ pokemon.pokemon_sprite }} />
                   <div class="row">
@@ -119,10 +120,10 @@
                 </div>
                   {% endif %}
                 </p>
+              </ul>
+              </div>
             {% endfor %}
-            </ul>
             {% endblock %}
-      </div>
       <div class="col-sm bg-danger">
       </div>
     </div>

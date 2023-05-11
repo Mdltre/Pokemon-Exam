@@ -15,4 +15,5 @@ urlpatterns = [
     path("pokemons-delete/<int:pk>", views.DeletePokemonView.as_view(), name='delete-pokemon'),
     path("list/search/", views.SearchPokemonView.as_view(), name='search-pokemon'),
     path("list/type-search/", views.FilterTypePokemonView.as_view(), name='search-pokemon-type')
+    
 ]

@@ -13,6 +13,7 @@ class RegisterView(CreateView):
     template_name = "register.html"
     success_url = reverse_lazy('login')
     
+#FILTER AND SEARCH CAN BE ONE VIEW
 class PokemonListView(ListView):
     model = Pokemon
     queryset = Pokemon.objects.all()
@@ -27,14 +28,14 @@ class PokemonDetailView(DetailView):
     def get_object(self):
         return get_object_or_404(Pokemon, pk=self.kwargs.get("pk"))
 
-@login_required
+
 class CreatePokemonView(CreateView):
     model = Pokemon
     form_class = PokemonForm
     template_name = "create_pokemon.html"
     success_url="pokedex/list/"
 
-@login_required
+
 class UpdatePokemonView(UpdateView):
     model = Pokemon 
     form_class = PokemonForm
@@ -45,7 +46,7 @@ class UpdatePokemonView(UpdateView):
     def get_object(self):
         return get_object_or_404(Pokemon, pk=self.kwargs.get("pk"))
 
-@login_required 
+
 class DeletePokemonView(DeleteView):
     model = Pokemon
     template_name = "delete_pokemon.html"
@@ -70,5 +71,5 @@ class FilterTypePokemonView(ListView):
         query = self.request.GET.get("types")
         if query:
             
-            return Pokemon.objects.filter(types__in=[query])
-        
+            return Pokemon.objects.filter(types__name__in=[query])
+

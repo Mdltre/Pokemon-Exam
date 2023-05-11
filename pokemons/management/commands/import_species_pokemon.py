@@ -8,7 +8,7 @@ class Command(BaseCommand):
     help = "Imports pokemon species."
     
     def handle(self, *args, **options):
-        url = "https://pokeapi.co/api/v2/pokemon-species/?offset=152&limit=152"
+        url = "https://pokeapi.co/api/v2/pokemon-species/?limit=151"
         
         response = requests.get(url)
         if response.status_code == 200:
