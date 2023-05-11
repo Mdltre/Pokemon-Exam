@@ -88,15 +88,12 @@ class PokemonDetailView(DetailView):
         
         return context
                 
-        
-
-    
 @method_decorator(login_required, name='dispatch')
 class CreatePokemonView(CreateView):
     model = Pokemon
     form_class = PokemonForm
     template_name = "create_pokemon.html"
-    success_url="pokedex/list/"
+    success_url='/pokedex/list/'
 
 @method_decorator(login_required, name='dispatch')
 class UpdatePokemonView(UpdateView):
