@@ -89,16 +89,29 @@
 
 <div class = "container text-center">
 {% if pokemons %}
-<p>Found {{ pokemons|length }} pokemon{{ pokemons|pluralize }}.</p>
+<p class="text-light">Found {{ pokemons|length }} pokemon{{ pokemons|pluralize }}.</p>
 {% else %}
 <p class="text-center"></p>
 {% endif %}
 {% if pokemons.exists %}
 {% for result in pokemons %}
-{{ result }}
+<div class="col-l bg-light text-center">
+  <ul class="text-center">    
+    <p></p>
+      <img src={{ result.pokemon_sprite }} />
+      <div class="row text-center">
+      <a href = "{% url 'pokemon-information' result.pk %}">{{result.pokemon_name}}</a>
+      {% if user.is_authenticated %}
+      <div class="col-sm">
+      <a class="btn btn-secondary" href="{% url 'update-pokemon' result.pk %}" role="button">Update</a>
+      <a class="btn btn-danger" href="{% url 'delete-pokemon' result.pk %}" role="button">Delete</a>
+      </div>
+    </div>
+  </ul>
+</div>
+    {% endif %}
 {% endfor %}
 {% endif %}
-</div>
 
 <div class="container d-flex">
     <div class="row">

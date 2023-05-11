@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from datetime import datetime, timezone, timedelta
 
 class Type(models.Model):
-    type_name = models.CharField(max_length=100, unique=True)
+    type_name = models.CharField(max_length=100)
     
     def __str__(self):
         return f"{self.type_name}"

@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from pokemons.models import Type, Species, Pokemon
+from django.db.models import Q 
 from django.contrib.auth.decorators import user_passes_test, login_required
 from pokemons.forms import PokemonForm, RegistrationForm
 
@@ -69,7 +70,11 @@ class FilterTypePokemonView(ListView):
     
     def get_queryset(self):
         query = self.request.GET.get("types")
+        
         if query:
             
-            return Pokemon.objects.filter(types__name__in=[query])
+            result = Type.objects.get(type_name__exact=query)
+            pokemon_result = Pokemon.objects.filter(pokemon_type = result)
+            
+            return pokemon_result
 
