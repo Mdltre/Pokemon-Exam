@@ -17,9 +17,24 @@ class RegisterView(CreateView):
 #FILTER AND SEARCH CAN BE ONE VIEW
 class PokemonListView(ListView):
     model = Pokemon
-    queryset = Pokemon.objects.all()
     context_object_name = "pokemon_list"
     template_name = "pokemon_list.html"
+    
+    def get_queryset(self):
+        t_query = self.request.GET.get("types")
+        query = self.request.GET.get("query")
+        
+        if t_query:
+            result = Type.objects.get(type_name__exact=t_query)
+            pokemon_result = Pokemon.objects.filter(pokemon_type = result)
+            return pokemon_result
+        
+        elif query:
+            return Pokemon.objects.filter(pokemon_name__contains=query)
+        
+        else:
+            return Pokemon.objects.all()
+            
     
 class PokemonDetailView(DetailView):
     model = Pokemon
@@ -53,28 +68,3 @@ class DeletePokemonView(DeleteView):
     template_name = "delete_pokemon.html"
     success_url = "/pokedex/list/"
     
-class SearchPokemonView(ListView):
-    model = Pokemon
-    template_name = "pokemon_list.html"
-    context_object_name = "pokemons"
-    
-    def get_queryset(self):
-        query = self.request.GET.get("query")
-        if query:
-            return Pokemon.objects.filter(pokemon_name__contains=query)
-    
-class FilterTypePokemonView(ListView):
-    model = Pokemon
-    template_name = "pokemon_list.html"
-    context_object_name = "pokemons"
-    
-    def get_queryset(self):
-        query = self.request.GET.get("types")
-        
-        if query:
-            
-            result = Type.objects.get(type_name__exact=query)
-            pokemon_result = Pokemon.objects.filter(pokemon_type = result)
-            
-            return pokemon_result
-
