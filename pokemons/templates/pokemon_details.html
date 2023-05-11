@@ -16,9 +16,18 @@
 <p>Height: {{pokemon.pokemon_height}}</p> 
 <p>Weight: {{pokemon.pokemon_weight}}</p>
 <p>Evolution Chart: </p>
-
-<p><img src={{ evolution.first_p.pokemon_sprite }} />{{evolution.first_p}}</p>
-<p><img src={{ evolution.second_p.pokemon_sprite }} />{{evolution.second_p}}</p>
-<p><img src={{ evolution.third_p.pokemon_sprite }} />{{evolution.third_p}}</p>
+<div class="row">
+    <div class="col-m">
+        <img src={{ evolution.first_p.pokemon_sprite }} />{{evolution.first_p}}
+        {% if evolution.second_p != None %}
+            ->
+        <img src={{ evolution.second_p.pokemon_sprite }} />{{evolution.second_p}}
+        {% endif %}
+        {% if evolution.third_p != None %}
+            ->
+        <img src={{ evolution.third_p.pokemon_sprite }} />{{evolution.third_p}}
+        {% endif %}
+    </div>
+</div>
 </div>
 {% endblock %}

@@ -31,10 +31,7 @@ class Command(BaseCommand):
                     third = e_info["chain"]["evolves_to"][0]["evolves_to"][0]["species"]["name"]
             
             if third != (None):
-                
-                thirdpic = Pokemon.objects.get(pokemon_name=third)
-                secondpic = Pokemon.objects.get(pokemon_name=second)
-                firstpic = Pokemon.objects.get(pokemon_name=first)
+               
                 print (first + " -> " + second + " -> " + third)
             
             elif second != (None):

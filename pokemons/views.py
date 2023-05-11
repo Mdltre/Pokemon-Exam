@@ -10,14 +10,12 @@ from django.contrib.auth.decorators import user_passes_test, login_required
 from django.utils.decorators import method_decorator
 from pokemons.forms import PokemonForm, RegistrationForm
 
-# Create your views here.
 
 class RegisterView(CreateView):
     form_class = RegistrationForm
     template_name = "register.html"
     success_url = reverse_lazy('login')
     
-#FILTER AND SEARCH CAN BE ONE VIEW
 class PokemonListView(ListView):
     model = Pokemon
     context_object_name = "pokemon_list"
@@ -50,7 +48,11 @@ class PokemonDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         pokemon = self.get_object()
-        species_url = f"https://pokeapi.co/api/v2/pokemon-species/{ pokemon.pokemon_name }"
+        second = None
+        third = None
+        second_p = None
+        third_p = None
+        species_url = f"https://pokeapi.co/api/v2/pokemon-species/{ pokemon.id }"
         
         res = requests.get(species_url)
         if res.status_code == 200:
@@ -67,13 +69,13 @@ class PokemonDetailView(DetailView):
                 if len(e_info["chain"]["evolves_to"][0]["evolves_to"]) > 0:
                     
                     third = e_info["chain"]["evolves_to"][0]["evolves_to"][0]["species"]["name"]
-            
-        if third != (None):
-                third_p = Pokemon.objects.get(pokemon_name=third)
 
-        if second != (None):
-                second_p = Pokemon.objects.get(pokemon_name=second)
-                
+        if second is not None:
+            second_p = Pokemon.objects.get(pokemon_name=second)
+            
+            if third is not None:
+                third_p = Pokemon.objects.get(pokemon_name=third)
+            
         first_p = Pokemon.objects.get(pokemon_name=first)
         
         evolution = {
@@ -82,7 +84,6 @@ class PokemonDetailView(DetailView):
             "first_p": first_p
         }
         
-        # if evolution.exists():
         context["evolution"] = evolution
         
         return context
