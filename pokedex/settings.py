@@ -125,4 +125,5 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = "/pokedex/list/"
-LOGOUT_REDIRECT_URL = "/pokedex/accounts/login/" 
+LOGOUT_REDIRECT_URL = "/pokedex/accounts/login/"
+LOGIN_URL = "/pokedex/accounts/login/"

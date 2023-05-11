@@ -3,8 +3,8 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
 from pokemons.models import Type, Species, Pokemon
-from django.db.models import Q 
 from django.contrib.auth.decorators import user_passes_test, login_required
+from django.utils.decorators import method_decorator
 from pokemons.forms import PokemonForm, RegistrationForm
 
 # Create your views here.
@@ -44,14 +44,14 @@ class PokemonDetailView(DetailView):
     def get_object(self):
         return get_object_or_404(Pokemon, pk=self.kwargs.get("pk"))
 
-
+@method_decorator(login_required, name='dispatch')
 class CreatePokemonView(CreateView):
     model = Pokemon
     form_class = PokemonForm
     template_name = "create_pokemon.html"
     success_url="pokedex/list/"
 
-
+@method_decorator(login_required, name='dispatch')
 class UpdatePokemonView(UpdateView):
     model = Pokemon 
     form_class = PokemonForm
@@ -62,7 +62,7 @@ class UpdatePokemonView(UpdateView):
     def get_object(self):
         return get_object_or_404(Pokemon, pk=self.kwargs.get("pk"))
 
-
+@method_decorator(login_required, name='dispatch')
 class DeletePokemonView(DeleteView):
     model = Pokemon
     template_name = "delete_pokemon.html"
